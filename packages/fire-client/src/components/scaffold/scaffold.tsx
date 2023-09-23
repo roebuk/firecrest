@@ -1,16 +1,15 @@
-import { FC, PropsWithChildren } from 'react'
+import { FC } from 'react'
 import { Footer } from '../footer/footer'
 import { Header } from '../header/header'
+import { Outlet } from 'react-router-dom'
 
-const skipId = 'main'
-
-export const Scaffold: FC<PropsWithChildren> = ({ children }) => (
+export const Scaffold: FC = () => (
   <>
-    {/* <SkipNavLink id={skipId}>Skip to content</SkipNavLink> */}
     <Header />
-    {/* <SkipNavContent id={skipId} /> */}
 
-    <main className="container mx-auto xl my-10">{children}</main>
+    <main className="container mx-auto xl my-10">
+      <Outlet />
+    </main>
 
     <Footer />
   </>
