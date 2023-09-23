@@ -1,7 +1,7 @@
-import { expect, test } from "bun:test";
+import { expect, test } from 'bun:test'
 
-test("RaceDetail", () => {
+test('RaceDetail', () => {
   // render(<RaceDetail />);
   // expect(screen.findByText("Lincoln")).toBeTruthy();
-  expect(true).toBe(true);
-});
+  expect(true).toBe(true)
+})

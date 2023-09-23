@@ -1,8 +1,7 @@
-import { RouterProvider } from "react-router-dom";
-import "./App.css";
+import { RouterProvider } from 'react-router-dom'
 
-import { Scaffold } from "./components/scaffold/scaffold";
-import { router } from "./router";
+import { Scaffold } from './components/scaffold/scaffold'
+import { router } from './router'
 
 function App() {
   return (
@@ -11,7 +10,7 @@ function App() {
         <RouterProvider router={router} />
       </Scaffold>
     </>
-  );
+  )
 }
 
-export default App;
+export default App

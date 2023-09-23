@@ -1,20 +1,19 @@
-import { useGetRaceQuery } from "../../graphql/types";
-import { Link } from "react-router-dom";
+import { useParams } from 'react-router-dom'
+import { Heading } from '../../components/heading/heading'
+import { useGetRaceQuery } from '../../graphql/types'
 
 export const RaceDetail = () => {
+  const { slug } = useParams<{ slug: string }>()
   const { loading, data, error } = useGetRaceQuery({
-    variables: { getRaceId: "232" },
-  });
+    variables: { getRaceId: slug ?? '' },
+  })
 
-  if (loading) return <h1>Loading</h1>;
-  if (error) return <h1>Error</h1>;
+  if (loading) return <h1>Loading</h1>
+  if (error) return <h1>Error</h1>
 
   return (
     <div>
-      <p>Lincoln</p>
-      <Link to="/">Home</Link>
-      <h1>{data?.getRace.id}</h1>
-      <h1>{data?.getRace.title}</h1>
+      <Heading>{data?.getRace.title}</Heading>
     </div>
-  );
-};
+  )
+}

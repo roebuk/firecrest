@@ -7,4 +7,4 @@ export const getRacesQuery = gql`
       title
     }
   }
-`;
+`

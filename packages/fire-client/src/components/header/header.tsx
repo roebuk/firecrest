@@ -1,5 +1,7 @@
 export const Header = () => (
-  <header>
-    <h1>BEAST</h1>
-  </header>
-);
+  <div className="bg-sky-500">
+    <header className="container mx-auto py-5">
+      <h1>BEAST</h1>
+    </header>
+  </div>
+)
