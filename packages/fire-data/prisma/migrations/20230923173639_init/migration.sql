@@ -4,7 +4,11 @@ CREATE TABLE "Race" (
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
     "title" VARCHAR(255) NOT NULL,
+    "slug" VARCHAR(255) NOT NULL,
     "published" BOOLEAN NOT NULL DEFAULT false,
 
     CONSTRAINT "Race_pkey" PRIMARY KEY ("id")
 );
+
+-- CreateIndex
+CREATE UNIQUE INDEX "Race_slug_key" ON "Race"("slug");

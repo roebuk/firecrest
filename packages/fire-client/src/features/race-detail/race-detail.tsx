@@ -1,12 +1,12 @@
 import { useParams } from 'react-router-dom'
 import { Heading } from '../../components/heading/heading'
-import { useGetRaceQuery } from '../../graphql/types'
 import { LinkButton } from '../../components/link/Link'
+import { useGetRaceBySlugQuery } from '../../graphql/types'
 
 export const RaceDetail = () => {
   const { slug } = useParams<{ slug: string }>()
-  const { loading, data, error } = useGetRaceQuery({
-    variables: { getRaceId: slug ?? '' },
+  const { loading, data, error } = useGetRaceBySlugQuery({
+    variables: { slug: slug ?? '' },
   })
 
   if (loading) return <h1>Loading</h1>
@@ -14,8 +14,8 @@ export const RaceDetail = () => {
 
   return (
     <div className="grid grid-cols-2 gap-2">
-      <div className="bg-black">
-        <Heading>{data?.getRace.title}</Heading>
+      <div className="bg-black text-white">
+        <Heading>{data?.getRaceBySlug?.title}</Heading>
       </div>
       <div className="bg-black">
         Price

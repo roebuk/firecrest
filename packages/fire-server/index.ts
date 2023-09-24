@@ -1,6 +1,6 @@
-import { ApolloServer } from '@apollo/server';
-import { startStandaloneServer } from '@apollo/server/standalone';
-import { getAllRaces } from 'fire-data'
+import { ApolloServer } from "@apollo/server";
+import { startStandaloneServer } from "@apollo/server/standalone";
+import { getAllRaces, getRaceBySlug, createRace } from "fire-data";
 
 // A schema is a collection of type definitions (hence "typeDefs")
 // that together define the "shape" of queries that are executed against
@@ -8,24 +8,32 @@ import { getAllRaces } from 'fire-data'
 const typeDefs = `#graphql
   type Race {
     id: ID!
-    title: String!
     published: Boolean!
+    title: String!
+    slug: String!
   }
 
   type Query {
     races: [Race!]!
-    getRace(id: ID!): Race!
+    getRaceBySlug(slug: String!): Race
+  }
+
+  type Mutation {
+    createRace(title: String!): Race!
   }
 `;
-
-
 
 // Resolvers define how to fetch the types defined in your schema.
 // This resolver retrieves books from the "books" array above.
 const resolvers = {
   Query: {
-    races: async () => await getAllRaces(),
-    getRace: async (_id: string) => (await getAllRaces())[0]
+    races: getAllRaces,
+    getRaceBySlug(_parent, { slug }, _context, _info) {
+      return getRaceBySlug(slug);
+    },
+  },
+  Mutation: {
+    createRace: (_, { title }) => createRace(title),
   },
 };
 

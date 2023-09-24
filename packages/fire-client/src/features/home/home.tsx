@@ -14,7 +14,7 @@ const RacePreview: FC<{ race: Race }> = ({ race }) => (
       />
 
       <div className="flex flex-col px-3 py-2">
-        <LinkOverlay to={`/event/${race.id}`}>{race.title}</LinkOverlay>
+        <LinkOverlay to={`/event/${race.slug}`}>{race.title}</LinkOverlay>
         <span>Lincoln</span>
         <span>£26</span>
       </div>

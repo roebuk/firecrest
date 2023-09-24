@@ -8,6 +8,10 @@ export const router = createBrowserRouter([
   {
     element: <Scaffold />,
     errorElement: <ErrorPage />,
+    loader: async (x) => {
+      console.log(x)
+      return null
+    },
     children: [
       {
         path: '/',

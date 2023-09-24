@@ -15,5 +15,6 @@ model Race {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   title     String   @db.VarChar(255)
+  slug      String   @unique @db.VarChar(255)
   published Boolean  @default(false)
 }

@@ -5,6 +5,7 @@ export const getRacesQuery = gql`
     races {
       id
       title
+      slug
     }
   }
 `

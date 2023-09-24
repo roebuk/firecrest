@@ -7,7 +7,7 @@ export const Link: FC<PropsWithChildren<LinkProps>> = ({
   ...props
 }) => (
   <ReactRouterLink
-    className="text-black hover:underline focus-visible:ring"
+    className="hover:underline focus-visible:ring"
     to={to}
     {...props}
   >
