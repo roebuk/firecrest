@@ -1,5 +1,5 @@
 name: Firecrest Full Run
-run-name: ${{ github.actor }} is testing out GitHub Actions 🚀
+run-name: Firecrest Full Run
 on: [push]
 jobs:
   lint-and-test:
