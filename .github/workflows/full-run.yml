@@ -11,5 +11,7 @@ jobs:
           bun-version: latest
       - run: bun install
       - run: bun test --workspace fire-client
+      - run: bun run --cwd packages/fire-client fmt-check
+      - run: bun run --cwd packages/fire-client lint
       - run: bun run --cwd packages/fire-client tsc
       - run: bun run --cwd packages/fire-client build-storybook

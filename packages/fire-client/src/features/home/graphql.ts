@@ -1,4 +1,4 @@
-import { gql } from "@apollo/client";
+import { gql } from '@apollo/client'
 
 export const getEventsQuery = gql`
   query GetEvents {
@@ -12,4 +12,4 @@ export const getEventsQuery = gql`
       }
     }
   }
-`;
+`
