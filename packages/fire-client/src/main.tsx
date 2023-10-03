@@ -3,6 +3,7 @@ import { ApolloClient, InMemoryCache, ApolloProvider } from '@apollo/client'
 import { createRoot } from 'react-dom/client'
 import { router } from './router.tsx'
 import { RouterProvider } from 'react-router-dom'
+import { HelmetProvider } from 'react-helmet-async'
 import './index.css'
 
 const client = new ApolloClient({
@@ -14,7 +15,9 @@ const client = new ApolloClient({
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <ApolloProvider client={client}>
-      <RouterProvider router={router} />
+      <HelmetProvider>
+        <RouterProvider router={router} />
+      </HelmetProvider>
     </ApolloProvider>
   </StrictMode>,
 )

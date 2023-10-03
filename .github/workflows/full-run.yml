@@ -1,0 +1,14 @@
+name: Firecrest Full Run
+run-name: ${{ github.actor }} is testing out GitHub Actions 🚀
+on: [push]
+jobs:
+  lint-and-test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: oven-sh/setup-bun@v1
+        with:
+          bun-version: latest
+      - run: bun install --workspace fire-client
+      - run: bun tsc --workspace fire-client
+      - run: bun test --workspace fire-client

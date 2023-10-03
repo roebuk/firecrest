@@ -1,11 +1,15 @@
-import { gql } from '@apollo/client'
+import { gql } from "@apollo/client";
 
-export const getRacesQuery = gql`
-  query GetRaces {
-    races {
+export const getEventsQuery = gql`
+  query GetEvents {
+    events {
       id
       title
       slug
+      races {
+        id
+        price
+      }
     }
   }
-`
+`;

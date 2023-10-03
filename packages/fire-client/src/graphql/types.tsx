@@ -17,159 +17,131 @@ export type Scalars = {
   Float: { input: number; output: number; }
 };
 
-export type Mutation = {
-  __typename?: 'Mutation';
-  createRace: Race;
-};
-
-
-export type MutationCreateRaceArgs = {
-  title: Scalars['String']['input'];
+export type Event = {
+  __typename?: 'Event';
+  date: Scalars['String']['output'];
+  id: Scalars['ID']['output'];
+  published: Scalars['Boolean']['output'];
+  races: Array<Race>;
+  slug: Scalars['String']['output'];
+  title: Scalars['String']['output'];
+  type: Scalars['String']['output'];
 };
 
 export type Query = {
   __typename?: 'Query';
-  getRaceBySlug?: Maybe<Race>;
-  races: Array<Race>;
+  events: Array<Event>;
+  getEventBySlug?: Maybe<Event>;
 };
 
 
-export type QueryGetRaceBySlugArgs = {
+export type QueryGetEventBySlugArgs = {
   slug: Scalars['String']['input'];
 };
 
 export type Race = {
   __typename?: 'Race';
+  capacity: Scalars['Int']['output'];
+  distance: Scalars['String']['output'];
   id: Scalars['ID']['output'];
-  published: Scalars['Boolean']['output'];
-  slug: Scalars['String']['output'];
-  title: Scalars['String']['output'];
+  price: Scalars['Int']['output'];
 };
 
-export type GetRacesQueryVariables = Exact<{ [key: string]: never; }>;
+export type GetEventsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetRacesQuery = { __typename?: 'Query', races: Array<{ __typename?: 'Race', id: string, title: string, slug: string }> };
+export type GetEventsQuery = { __typename?: 'Query', events: Array<{ __typename?: 'Event', id: string, title: string, slug: string, races: Array<{ __typename?: 'Race', id: string, price: number }> }> };
 
-export type GetRaceBySlugQueryVariables = Exact<{
+export type GetEventBySlugQueryVariables = Exact<{
   slug: Scalars['String']['input'];
 }>;
 
 
-export type GetRaceBySlugQuery = { __typename?: 'Query', getRaceBySlug?: { __typename?: 'Race', id: string, title: string, published: boolean } | null };
-
-export type CreateRaceMutationVariables = Exact<{
-  title: Scalars['String']['input'];
-}>;
+export type GetEventBySlugQuery = { __typename?: 'Query', getEventBySlug?: { __typename?: 'Event', id: string, title: string, published: boolean, date: string, type: string, races: Array<{ __typename?: 'Race', id: string, price: number, capacity: number, distance: string }> } | null };
 
 
-export type CreateRaceMutation = { __typename?: 'Mutation', createRace: { __typename?: 'Race', id: string, title: string } };
-
-
-export const GetRacesDocument = gql`
-    query GetRaces {
-  races {
+export const GetEventsDocument = gql`
+    query GetEvents {
+  events {
     id
     title
     slug
+    races {
+      id
+      price
+    }
   }
 }
     `;
 
 /**
- * __useGetRacesQuery__
+ * __useGetEventsQuery__
  *
- * To run a query within a React component, call `useGetRacesQuery` and pass it any options that fit your needs.
- * When your component renders, `useGetRacesQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * To run a query within a React component, call `useGetEventsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetEventsQuery` returns an object from Apollo Client that contains loading, error, and data properties
  * you can use to render your UI.
  *
  * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
  *
  * @example
- * const { data, loading, error } = useGetRacesQuery({
+ * const { data, loading, error } = useGetEventsQuery({
  *   variables: {
  *   },
  * });
  */
-export function useGetRacesQuery(baseOptions?: Apollo.QueryHookOptions<GetRacesQuery, GetRacesQueryVariables>) {
+export function useGetEventsQuery(baseOptions?: Apollo.QueryHookOptions<GetEventsQuery, GetEventsQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<GetRacesQuery, GetRacesQueryVariables>(GetRacesDocument, options);
+        return Apollo.useQuery<GetEventsQuery, GetEventsQueryVariables>(GetEventsDocument, options);
       }
-export function useGetRacesLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetRacesQuery, GetRacesQueryVariables>) {
+export function useGetEventsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetEventsQuery, GetEventsQueryVariables>) {
           const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<GetRacesQuery, GetRacesQueryVariables>(GetRacesDocument, options);
+          return Apollo.useLazyQuery<GetEventsQuery, GetEventsQueryVariables>(GetEventsDocument, options);
         }
-export type GetRacesQueryHookResult = ReturnType<typeof useGetRacesQuery>;
-export type GetRacesLazyQueryHookResult = ReturnType<typeof useGetRacesLazyQuery>;
-export type GetRacesQueryResult = Apollo.QueryResult<GetRacesQuery, GetRacesQueryVariables>;
-export const GetRaceBySlugDocument = gql`
-    query GetRaceBySlug($slug: String!) {
-  getRaceBySlug(slug: $slug) {
+export type GetEventsQueryHookResult = ReturnType<typeof useGetEventsQuery>;
+export type GetEventsLazyQueryHookResult = ReturnType<typeof useGetEventsLazyQuery>;
+export type GetEventsQueryResult = Apollo.QueryResult<GetEventsQuery, GetEventsQueryVariables>;
+export const GetEventBySlugDocument = gql`
+    query GetEventBySlug($slug: String!) {
+  getEventBySlug(slug: $slug) {
     id
     title
     published
+    date
+    type
+    races {
+      id
+      price
+      capacity
+      distance
+    }
   }
 }
     `;
 
 /**
- * __useGetRaceBySlugQuery__
+ * __useGetEventBySlugQuery__
  *
- * To run a query within a React component, call `useGetRaceBySlugQuery` and pass it any options that fit your needs.
- * When your component renders, `useGetRaceBySlugQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * To run a query within a React component, call `useGetEventBySlugQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetEventBySlugQuery` returns an object from Apollo Client that contains loading, error, and data properties
  * you can use to render your UI.
  *
  * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
  *
  * @example
- * const { data, loading, error } = useGetRaceBySlugQuery({
+ * const { data, loading, error } = useGetEventBySlugQuery({
  *   variables: {
  *      slug: // value for 'slug'
  *   },
  * });
  */
-export function useGetRaceBySlugQuery(baseOptions: Apollo.QueryHookOptions<GetRaceBySlugQuery, GetRaceBySlugQueryVariables>) {
+export function useGetEventBySlugQuery(baseOptions: Apollo.QueryHookOptions<GetEventBySlugQuery, GetEventBySlugQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<GetRaceBySlugQuery, GetRaceBySlugQueryVariables>(GetRaceBySlugDocument, options);
+        return Apollo.useQuery<GetEventBySlugQuery, GetEventBySlugQueryVariables>(GetEventBySlugDocument, options);
       }
-export function useGetRaceBySlugLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetRaceBySlugQuery, GetRaceBySlugQueryVariables>) {
+export function useGetEventBySlugLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetEventBySlugQuery, GetEventBySlugQueryVariables>) {
           const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<GetRaceBySlugQuery, GetRaceBySlugQueryVariables>(GetRaceBySlugDocument, options);
+          return Apollo.useLazyQuery<GetEventBySlugQuery, GetEventBySlugQueryVariables>(GetEventBySlugDocument, options);
         }
-export type GetRaceBySlugQueryHookResult = ReturnType<typeof useGetRaceBySlugQuery>;
-export type GetRaceBySlugLazyQueryHookResult = ReturnType<typeof useGetRaceBySlugLazyQuery>;
-export type GetRaceBySlugQueryResult = Apollo.QueryResult<GetRaceBySlugQuery, GetRaceBySlugQueryVariables>;
-export const CreateRaceDocument = gql`
-    mutation CreateRace($title: String!) {
-  createRace(title: $title) {
-    id
-    title
-  }
-}
-    `;
-export type CreateRaceMutationFn = Apollo.MutationFunction<CreateRaceMutation, CreateRaceMutationVariables>;
-
-/**
- * __useCreateRaceMutation__
- *
- * To run a mutation, you first call `useCreateRaceMutation` within a React component and pass it any options that fit your needs.
- * When your component renders, `useCreateRaceMutation` returns a tuple that includes:
- * - A mutate function that you can call at any time to execute the mutation
- * - An object with fields that represent the current status of the mutation's execution
- *
- * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
- *
- * @example
- * const [createRaceMutation, { data, loading, error }] = useCreateRaceMutation({
- *   variables: {
- *      title: // value for 'title'
- *   },
- * });
- */
-export function useCreateRaceMutation(baseOptions?: Apollo.MutationHookOptions<CreateRaceMutation, CreateRaceMutationVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useMutation<CreateRaceMutation, CreateRaceMutationVariables>(CreateRaceDocument, options);
-      }
-export type CreateRaceMutationHookResult = ReturnType<typeof useCreateRaceMutation>;
-export type CreateRaceMutationResult = Apollo.MutationResult<CreateRaceMutation>;
-export type CreateRaceMutationOptions = Apollo.BaseMutationOptions<CreateRaceMutation, CreateRaceMutationVariables>;
+export type GetEventBySlugQueryHookResult = ReturnType<typeof useGetEventBySlugQuery>;
+export type GetEventBySlugLazyQueryHookResult = ReturnType<typeof useGetEventBySlugLazyQuery>;
+export type GetEventBySlugQueryResult = Apollo.QueryResult<GetEventBySlugQuery, GetEventBySlugQueryVariables>;

@@ -1,17 +1,20 @@
 import { prisma } from "./client";
 import urlSlug from "url-slug";
 
-const count = await prisma.race.count();
-console.log(`There are ${count} users in the database.`);
+const count = await prisma.event.count();
+console.log(`There are ${count} events in the database.`);
 
-export const getAllRaces = async () =>
-  await prisma.race.findMany({ where: { published: true } });
+export const getAllEvents = async () =>
+  await prisma.event.findMany({
+    where: { published: true },
+    include: { races: true },
+  });
 
-export const getRaceBySlug = async (slug: string) =>
-  await prisma.race.findUnique({ where: { slug } });
+export const getEventBySlug = async (slug: string) =>
+  await prisma.event.findUnique({ where: { slug }, include: { races: true } });
 
 export const createRace = async (title: string) =>
-  await prisma.race.create({
+  await prisma.event.create({
     data: {
       title,
       slug: urlSlug(title),

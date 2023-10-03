@@ -3,9 +3,12 @@
   "module": "index.ts",
   "type": "module",
   "scripts": {
-    "dev": "bun ./index.ts"
+    "dev": "bun --watch ./index.ts",
+    "codegen": "graphql-codegen --config codegen.ts"
   },
   "devDependencies": {
+    "@graphql-codegen/cli": "5.0.0",
+    "@graphql-codegen/typescript-resolvers": "4.0.1",
     "bun-types": "latest"
   },
   "peerDependencies": {

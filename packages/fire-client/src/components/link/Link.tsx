@@ -1,6 +1,8 @@
 import { FC, PropsWithChildren } from 'react'
 import { LinkProps, Link as ReactRouterLink } from 'react-router-dom'
 
+type LinkButtonProps = LinkProps & { fullWidth: boolean }
+
 export const Link: FC<PropsWithChildren<LinkProps>> = ({
   children,
   to,
@@ -15,13 +17,16 @@ export const Link: FC<PropsWithChildren<LinkProps>> = ({
   </ReactRouterLink>
 )
 
-export const LinkButton: FC<PropsWithChildren<LinkProps>> = ({
+export const LinkButton: FC<PropsWithChildren<LinkButtonProps>> = ({
   children,
   to,
+  fullWidth,
   ...props
 }) => (
   <ReactRouterLink
-    className="border border-sky-600 text-sky-600 rounded-md px-4 py-2 leading-5 cursor-pointer text-base font-semibold focus-visible:ring"
+    className={`block text-center border border-sky-600 text-sky-600 rounded-md px-4 py-2 leading-5 cursor-pointer text-base font-semibold focus-visible:ring ${
+      fullWidth ? `w-full` : ''
+    }`}
     to={to}
     {...props}
   >

@@ -10,11 +10,51 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Race {
-  id        String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+model Event {
+  id        String   @id @unique @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   title     String   @db.VarChar(255)
   slug      String   @unique @db.VarChar(255)
   published Boolean  @default(false)
+  // Remove default
+  date      DateTime @default(now())
+  races     Race[]
+  // Remove default
+  type      RaceType @default(RUN)
+
+  @@index([slug], type: Hash)
+}
+
+model Race {
+  id        String   @id @unique @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  Event     Event    @relation(fields: [eventId], references: [id])
+  eventId   String   @db.Uuid
+  price     Int
+  // Remove default
+  capacity  Int      @default(2000)
+  // Remove default
+  distance  Distance @default(FIVE_K)
+
+  @@index([id], type: Hash)
+}
+
+enum Distance {
+  FIVE_K
+  TEN_K
+  FIFTEEN_K
+  HALF
+  MARATHON
+  SPRINT
+}
+
+enum RaceType {
+  RUN
+  BIKE
+  SWIM
+  TRI
+  DU
+  OBSTACLE
 }

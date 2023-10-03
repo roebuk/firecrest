@@ -21,6 +21,6 @@ export const Heading: FC<PropsWithChildren<HeadingProps>> = ({
 
   return createElement(as, {
     children,
-    className: `${textSize} m-0 p-0`,
+    className: `${textSize} m-0 p-0 font-bold`,
   })
 }

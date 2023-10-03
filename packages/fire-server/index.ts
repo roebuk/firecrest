@@ -1,6 +1,7 @@
 import { ApolloServer } from "@apollo/server";
 import { startStandaloneServer } from "@apollo/server/standalone";
-import { getAllRaces, getRaceBySlug, createRace } from "fire-data";
+import { getAllEvents, getEventBySlug, createRace } from "fire-data";
+import { Resolvers } from "./types";
 
 // A schema is a collection of type definitions (hence "typeDefs")
 // that together define the "shape" of queries that are executed against
@@ -8,32 +9,33 @@ import { getAllRaces, getRaceBySlug, createRace } from "fire-data";
 const typeDefs = `#graphql
   type Race {
     id: ID!
-    published: Boolean!
+    price: Int!
+    capacity: Int!
+    distance: String!
+  }
+
+  type Event {
+    id: ID!
     title: String!
+    published: Boolean!
     slug: String!
+    races: [Race!]!
+    date: String!
+    type: String!
   }
 
   type Query {
-    races: [Race!]!
-    getRaceBySlug(slug: String!): Race
-  }
-
-  type Mutation {
-    createRace(title: String!): Race!
+    events: [Event!]!
+    getEventBySlug(slug: String!): Event
   }
 `;
 
-// Resolvers define how to fetch the types defined in your schema.
-// This resolver retrieves books from the "books" array above.
-const resolvers = {
+const resolvers: Resolvers = {
   Query: {
-    races: getAllRaces,
-    getRaceBySlug(_parent, { slug }, _context, _info) {
-      return getRaceBySlug(slug);
+    events: getAllEvents,
+    getEventBySlug(_parent, { slug }, _context, _info) {
+      return getEventBySlug(slug);
     },
-  },
-  Mutation: {
-    createRace: (_, { title }) => createRace(title),
   },
 };
 
@@ -48,7 +50,8 @@ const server = new ApolloServer({
 //  1. creates an Express app
 //  2. installs your ApolloServer instance as middleware
 //  3. prepares your app to handle incoming requests
-const { url } = await startStandaloneServer(server, {
+/** @ts-ignore */
+const { url } = await startStandaloneServer<any>(server, {
   listen: { port: 4000 },
 });
 
