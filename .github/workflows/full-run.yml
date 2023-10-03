@@ -9,6 +9,6 @@ jobs:
       - uses: oven-sh/setup-bun@v1
         with:
           bun-version: latest
-      - run: bun install --workspace fire-client
-      - run: bun tsc --workspace fire-client
-      - run: bun test --workspace fire-client
+      - run: bun install
+      - run: bun --workspace fire-client tsc
+      - run: bun --workspace fire-client test
