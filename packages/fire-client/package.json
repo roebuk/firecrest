@@ -16,7 +16,8 @@
     "build-storybook": "storybook build",
     "__FORMATTING__": "-----",
     "fmt-check": "dprint check",
-    "fmt": "dprint fmt"
+    "fmt": "dprint fmt",
+    "tsc": "tsc"
   },
   "dependencies": {
     "@apollo/client": "3.8.3",

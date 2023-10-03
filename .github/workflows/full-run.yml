@@ -10,5 +10,6 @@ jobs:
         with:
           bun-version: latest
       - run: bun install
-      - run: bun run --workspace fire-client tsc
-      - run: bun run --workspace fire-client test
+      - run: bun test --workspace fire-client
+      - run: bun run --cwd packages/fire-client tsc
+      - run: bun run --cwd packages/fire-client build-storybook
