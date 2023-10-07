@@ -1,4 +1,4 @@
-import { gql } from '@apollo/client'
+import { gql } from "@apollo/client";
 
 export const getEventBySlug = gql`
   query GetEventBySlug($slug: String!) {
@@ -16,13 +16,4 @@ export const getEventBySlug = gql`
       }
     }
   }
-`
-
-// export const createRace = gql`
-//   mutation CreateRace($title: String!) {
-//     createRace(title: $title) {
-//       id
-//       title
-//     }
-//   }
-// `;
+`;

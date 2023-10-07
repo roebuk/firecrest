@@ -1,20 +1,32 @@
 import http from "node:http";
-import { ApolloServer, BaseContext } from "@apollo/server";
+import { ApolloServer } from "@apollo/server";
 import { ApolloServerPluginDrainHttpServer } from "@apollo/server/plugin/drainHttpServer";
-import express from "express";
+import express, { Request, Response } from "express";
 import { json } from "body-parser";
 import cookieParser from "cookie-parser";
 import cors from "cors";
-import { getAllEvents, getEventBySlug, createRace } from "fire-data";
+import { getAllEvents, getEventBySlug } from "fire-data";
 import { Resolvers } from "./types";
-import { expressMiddleware } from "@apollo/server/express4";
+import {
+  ExpressMiddlewareOptions,
+  expressMiddleware,
+} from "@apollo/server/express4";
+
+export type MyContext = {
+  req: Request;
+  res: Response;
+};
+
+export type ExpressContext = ExpressMiddlewareOptions<MyContext>;
 
 const app = express();
 const httpServer = http.createServer(app);
 
-// A schema is a collection of type definitions (hence "typeDefs")
-// that together define the "shape" of queries that are executed against
-// your data.
+const corsConfig =
+  process.env.NODE_ENV === "production"
+    ? {}
+    : { origin: "http://localhost:5173", credentials: true };
+
 const typeDefs = `#graphql
   type Race {
     id: ID!
@@ -48,7 +60,7 @@ const resolvers: Resolvers = {
   },
 };
 
-const server = new ApolloServer<BaseContext>({
+const server = new ApolloServer<ExpressContext>({
   typeDefs,
   resolvers,
   plugins: [ApolloServerPluginDrainHttpServer({ httpServer })],
@@ -60,13 +72,15 @@ app.disable("x-powered-by");
 
 app.use(
   "/graphql",
-  cors<cors.CorsRequest>({
-    origin: "http://localhost:5173",
-    credentials: true,
-  }),
+  cors<cors.CorsRequest>(corsConfig),
   json(),
   cookieParser(),
-  expressMiddleware(server)
+  expressMiddleware(server, {
+    context: async ({ req, res }) => ({
+      req,
+      res,
+    }),
+  })
 );
 
 await new Promise<void>((resolve) =>
