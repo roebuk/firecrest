@@ -19,11 +19,11 @@ export const router = createBrowserRouter([
       },
       { path: '/event/:slug', element: <RaceDetail /> },
       {
-        path: '/admin/event/:slug',
+        path: '/admin',
         lazy: async () => {
-          const { Admin } = await import('./features/admin')
+          const { Login } = await import('./features/auth/login')
 
-          return { Component: Admin }
+          return { Component: Login }
         },
       },
     ],

@@ -4,7 +4,7 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "conc \"vite\" \"bun run codegen -w\"",
+    "dev": "NODE_TLS_REJECT_UNAUTHORIZED=0 conc \"vite\" \"bun run codegen -w\"",
     "build": "tsc && vite build",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",

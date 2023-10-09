@@ -1,37 +1,28 @@
-import { useForm } from 'react-hook-form'
-import { Link } from 'react-router-dom'
-
-type FormData = {
-  firstName: string
-  lastName: string
-}
+import { useLoginMutation, useLogoutMutation } from '../../graphql/types'
 
 export const Login = () => {
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<FormData>()
-  const onSubmit = handleSubmit((data) => console.log(data))
+  const [loginMutation, { data, loading, error }] = useLoginMutation()
+  const [logoutMutation] = useLogoutMutation()
+  const onLogin = (e) => {
+    e.preventDefault()
+    loginMutation({ variables: { id: '123' } })
+  }
+
+  const onLogout = (e) => {
+    e.preventDefault()
+    logoutMutation({ variables: { id: '123' } })
+  }
   // firstName and lastName will have correct type
 
   return (
-    <form onSubmit={onSubmit}>
-      <Link to="/">Home</Link>
-      {Object.keys(errors).length > 0 && (
-        <p aria-live="polite">We detected the following errors:</p>
-      )}
-      <label>First Name</label>
-      <input
-        aria-invalid={Boolean(errors.firstName)}
-        {...register('firstName', { required: true, minLength: 20 })}
-      />
-      <label>Last Name</label>
-      <input
-        aria-invalid={Boolean(errors.lastName)}
-        {...register('lastName', { required: true, minLength: 20 })}
-      />
-      <button type="submit">SetValue</button>
-    </form>
+    <div>
+      <form onSubmit={onLogin}>
+        <button type="submit">Login</button>
+      </form>
+
+      <form onSubmit={onLogout}>
+        <button type="submit">Logout</button>
+      </form>
+    </div>
   )
 }

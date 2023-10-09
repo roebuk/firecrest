@@ -17,3 +17,21 @@ export const getEventBySlug = gql`
     }
   }
 `;
+
+export const getEventByID = gql`
+  query GetEventByID($id: ID!) {
+    getEventByID(id: $id) {
+      id
+      title
+    }
+  }
+`;
+
+export const updateEventByID = gql`
+  mutation UpdateEventByID($id: ID!) {
+    updateEventByID(id: $id) {
+      id
+      title
+    }
+  }
+`;

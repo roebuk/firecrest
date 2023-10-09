@@ -30,25 +30,36 @@ export type Event = {
 
 export type Mutation = {
   __typename?: 'Mutation';
-  login: User;
-  logout: User;
+  login?: Maybe<Event>;
+  logout?: Maybe<Event>;
+  updateEventByID?: Maybe<Event>;
 };
 
 
 export type MutationLoginArgs = {
-  name: Scalars['String']['input'];
+  id: Scalars['ID']['input'];
 };
 
 
 export type MutationLogoutArgs = {
-  name: Scalars['String']['input'];
+  id: Scalars['ID']['input'];
+};
+
+
+export type MutationUpdateEventByIdArgs = {
+  id: Scalars['ID']['input'];
 };
 
 export type Query = {
   __typename?: 'Query';
   events: Array<Event>;
+  getEventByID?: Maybe<Event>;
   getEventBySlug?: Maybe<Event>;
-  getUser: User;
+};
+
+
+export type QueryGetEventByIdArgs = {
+  id: Scalars['ID']['input'];
 };
 
 
@@ -62,11 +73,6 @@ export type Race = {
   distance: Scalars['String']['output'];
   id: Scalars['ID']['output'];
   price: Scalars['Int']['output'];
-};
-
-export type User = {
-  __typename?: 'User';
-  name: Scalars['String']['output'];
 };
 
 
@@ -148,7 +154,6 @@ export type ResolversTypes = {
   Query: ResolverTypeWrapper<{}>;
   Race: ResolverTypeWrapper<Race>;
   String: ResolverTypeWrapper<Scalars['String']['output']>;
-  User: ResolverTypeWrapper<User>;
 };
 
 /** Mapping between all available schema types and the resolvers parents */
@@ -161,7 +166,6 @@ export type ResolversParentTypes = {
   Query: {};
   Race: Race;
   String: Scalars['String']['output'];
-  User: User;
 };
 
 export type EventResolvers<ContextType = MyContext, ParentType extends ResolversParentTypes['Event'] = ResolversParentTypes['Event']> = {
@@ -176,14 +180,15 @@ export type EventResolvers<ContextType = MyContext, ParentType extends Resolvers
 };
 
 export type MutationResolvers<ContextType = MyContext, ParentType extends ResolversParentTypes['Mutation'] = ResolversParentTypes['Mutation']> = {
-  login?: Resolver<ResolversTypes['User'], ParentType, ContextType, RequireFields<MutationLoginArgs, 'name'>>;
-  logout?: Resolver<ResolversTypes['User'], ParentType, ContextType, RequireFields<MutationLogoutArgs, 'name'>>;
+  login?: Resolver<Maybe<ResolversTypes['Event']>, ParentType, ContextType, RequireFields<MutationLoginArgs, 'id'>>;
+  logout?: Resolver<Maybe<ResolversTypes['Event']>, ParentType, ContextType, RequireFields<MutationLogoutArgs, 'id'>>;
+  updateEventByID?: Resolver<Maybe<ResolversTypes['Event']>, ParentType, ContextType, RequireFields<MutationUpdateEventByIdArgs, 'id'>>;
 };
 
 export type QueryResolvers<ContextType = MyContext, ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']> = {
   events?: Resolver<Array<ResolversTypes['Event']>, ParentType, ContextType>;
+  getEventByID?: Resolver<Maybe<ResolversTypes['Event']>, ParentType, ContextType, RequireFields<QueryGetEventByIdArgs, 'id'>>;
   getEventBySlug?: Resolver<Maybe<ResolversTypes['Event']>, ParentType, ContextType, RequireFields<QueryGetEventBySlugArgs, 'slug'>>;
-  getUser?: Resolver<ResolversTypes['User'], ParentType, ContextType>;
 };
 
 export type RaceResolvers<ContextType = MyContext, ParentType extends ResolversParentTypes['Race'] = ResolversParentTypes['Race']> = {
@@ -194,16 +199,10 @@ export type RaceResolvers<ContextType = MyContext, ParentType extends ResolversP
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
-export type UserResolvers<ContextType = MyContext, ParentType extends ResolversParentTypes['User'] = ResolversParentTypes['User']> = {
-  name?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
-};
-
 export type Resolvers<ContextType = MyContext> = {
   Event?: EventResolvers<ContextType>;
   Mutation?: MutationResolvers<ContextType>;
   Query?: QueryResolvers<ContextType>;
   Race?: RaceResolvers<ContextType>;
-  User?: UserResolvers<ContextType>;
 };
 

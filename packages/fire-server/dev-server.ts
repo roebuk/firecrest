@@ -1,4 +1,4 @@
-import http from "node:http";
+import https from "node:https";
 import { ApolloServer } from "@apollo/server";
 import { ApolloServerPluginDrainHttpServer } from "@apollo/server/plugin/drainHttpServer";
 import express, { Request, Response } from "express";
@@ -18,8 +18,12 @@ export type MyContext = {
 
 export type ExpressContext = ExpressMiddlewareOptions<MyContext>;
 
+const options = {
+  key: await Bun.file("./dev-certs/key.pem").text(),
+  cert: await Bun.file("./dev-certs/cert.pem").text(),
+};
 const app = express();
-const httpServer = http.createServer(app);
+const httpServer = https.createServer(options, app);
 
 const corsConfig =
   process.env.NODE_ENV === "production"
@@ -41,11 +45,6 @@ app.use(
   cors<cors.CorsRequest>(corsConfig),
   json(),
   cookieParser(),
-  (req, res, next) => {
-    console.log(req.cookies);
-
-    next();
-  },
   expressMiddleware(server, {
     context: async ({ req, res }) => ({
       req,
@@ -57,4 +56,4 @@ app.use(
 await new Promise<void>((resolve) =>
   httpServer.listen({ port: 4000 }, resolve)
 );
-console.log(`🚀 Server ready at http://localhost:4000/graphql`);
+console.log(`🚀 Server ready at https://localhost:4000/graphql`);
